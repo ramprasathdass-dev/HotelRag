@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Azure Bay Hotel</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <div class="aurora aurora-one"></div>
+        <div class="aurora aurora-two"></div>
+        <div class="aurora aurora-three"></div>
+
+        <header class="hero-card">
+            <div class="hero-copy">
+                <span class="eyebrow">Immersive coastal concierge</span>
+                <h1>Grand Azure Bay Hotel</h1>
+                <p>
+                    A more cinematic hotel booking experience with AI-guided planning, signature stay curation,
+                    secure reservation management, and a downloadable booking receipt for every confirmed stay.
+                </p>
+                <div class="hero-actions">
+                    <a href="#reservation-section" class="primary-link">Create a stay</a>
+                    <button type="button" class="ghost-link" id="scrollToAssistant">Open AI concierge</button>
+                </div>
+                <div class="hero-ribbon">
+                    <span>Downloadable receipt</span>
+                    <span>Smart stay preview</span>
+                    <span>Signature add-ons</span>
+                </div>
+            </div>
+
+            <div class="hero-showcase">
+                <article class="showcase-card spotlight">
+                    <span class="stat-label">Hotel atmosphere</span>
+                    <strong>Ocean-driven luxury</strong>
+                    <p>Editorial layout, layered motion, and guest-first service design.</p>
+                </article>
+                <article class="showcase-card metric">
+                    <span class="stat-label">AI concierge</span>
+                    <strong id="conciergeState">Ready to curate</strong>
+                    <p id="conciergeSignal">Switch modes, ask questions, and shape a personalized visit.</p>
+                </article>
+                <div class="hero-mini-grid">
+                    <article class="mini-stat">
+                        <span>Check-in</span>
+                        <strong>3:00 PM</strong>
+                    </article>
+                    <article class="mini-stat">
+                        <span>Support</span>
+                        <strong>24/7 desk</strong>
+                    </article>
+                    <article class="mini-stat">
+                        <span>Receipt</span>
+                        <strong>1-click download</strong>
+                    </article>
+                    <article class="mini-stat">
+                        <span>Planning</span>
+                        <strong>Live itinerary</strong>
+                    </article>
+                </div>
+            </div>
+        </header>
+
+        <main class="content-stack">
+            <section class="experience-grid" id="assistant-section">
+                <article class="panel panel-wide">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">AI concierge studio</span>
+                            <h2>Ask, plan, and personalize</h2>
+                        </div>
+                        <span class="live-pill">Adaptive guest assistant</span>
+                    </div>
+
+                    <div class="assistant-topbar">
+                        <div class="mode-switch" id="assistantModes">
+                            <button type="button" class="mode-pill active" data-mode="policy">Policy</button>
+                            <button type="button" class="mode-pill" data-mode="stay">Stay design</button>
+                            <button type="button" class="mode-pill" data-mode="local">Local tips</button>
+                        </div>
+                        <button type="button" class="ghost-link compact" id="voicePromptButton">Voice input</button>
+                    </div>
+
+                    <div class="prompt-row" id="dynamicPromptRow">
+                        <button type="button" class="prompt-chip" data-prompt="What is the cancellation policy?">Cancellation policy</button>
+                        <button type="button" class="prompt-chip" data-prompt="What time is check-in and check-out?">Check-in timings</button>
+                        <button type="button" class="prompt-chip" data-prompt="Can you help me manage my reservation?">Manage my booking</button>
+                    </div>
+
+                    <form id="assistantForm" class="assistant-form">
+                        <label for="assistantMessage">Your question</label>
+                        <textarea
+                            id="assistantMessage"
+                            name="message"
+                            rows="5"
+                            placeholder="Ask about hotel policies, itinerary ideas, reservation help, or your stay style..."
+                            required
+                        ></textarea>
+                        <div class="assistant-actions">
+                            <button type="submit" class="button button-primary" id="assistantSubmit">Ask concierge</button>
+                            <button type="button" class="button button-secondary" id="composeStayButton">Compose stay vision</button>
+                            <span class="subtle-note">Grounded answers appear with source tags when policy guidance is used.</span>
+                        </div>
+                    </form>
+
+                    <div class="assistant-output-grid">
+                        <div class="response-card feature-card" id="assistantResponseCard">
+                            <div class="response-header">
+                                <span>Concierge response</span>
+                                <span class="response-intent" id="assistantIntent">Ready</span>
+                            </div>
+                            <p id="assistantResponse">
+                                Your answer will appear here. Try a quick prompt or let the concierge build a stay vision.
+                            </p>
+                            <div class="source-list" id="assistantSources"></div>
+                        </div>
+
+                        <div class="feature-card insights-card">
+                            <div class="micro-header">
+                                <span>Actionable next step</span>
+                            </div>
+                            <strong id="assistantNextStep">Choose a room and dates to unlock a richer stay plan.</strong>
+                            <p id="assistantMicroSummary">
+                                The assistant will translate your booking choices into a more personal experience path.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="history-card">
+                        <div class="micro-header">
+                            <span>Concierge memory</span>
+                        </div>
+                        <div class="history-feed" id="assistantHistory">
+                            <article class="history-item">
+                                <strong>Studio ready</strong>
+                                <p>Your recent concierge questions and generated ideas will appear here.</p>
+                            </article>
+                        </div>
+                    </div>
+                </article>
+
+                <aside class="panel panel-side">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">Stay blueprint</span>
+                            <h2>Live planning deck</h2>
+                        </div>
+                    </div>
+
+                    <div class="insight-stack">
+                        <article class="insight-card pulse-card">
+                            <span>Guest profile</span>
+                            <strong id="summaryGuestName">Awaiting booking</strong>
+                            <p id="summaryStayWindow">Choose your dates to preview your stay summary.</p>
+                        </article>
+
+                        <article class="preview-card">
+                            <div class="preview-topline">
+                                <span>Live reservation preview</span>
+                                <strong id="summaryNights">0 nights</strong>
+                            </div>
+                            <dl class="preview-grid">
+                                <div>
+                                    <dt>Room</dt>
+                                    <dd id="summaryRoom">Ocean Deluxe</dd>
+                                </div>
+                                <div>
+                                    <dt>Guests</dt>
+                                    <dd id="summaryGuests">2 guests</dd>
+                                </div>
+                                <div>
+                                    <dt>Check-in</dt>
+                                    <dd id="summaryCheckIn">Select a date</dd>
+                                </div>
+                                <div>
+                                    <dt>Check-out</dt>
+                                    <dd id="summaryCheckOut">Select a date</dd>
+                                </div>
+                                <div>
+                                    <dt>Arrival</dt>
+                                    <dd id="summaryArrival">Flexible</dd>
+                                </div>
+                                <div>
+                                    <dt>Estimate</dt>
+                                    <dd id="summaryEstimate">$540</dd>
+                                </div>
+                            </dl>
+                        </article>
+
+                        <article class="feature-card itinerary-card">
+                            <div class="micro-header">
+                                <span>AI stay flow</span>
+                            </div>
+                            <div class="timeline-list" id="timelineList">
+                                <article class="timeline-item">
+                                    <strong>Arrival moment</strong>
+                                    <p>Select your stay details to generate a curated guest journey.</p>
+                                </article>
+                            </div>
+                        </article>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="signature-grid">
+                <article class="panel signature-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">Signature experiences</span>
+                            <h2>Click to enrich the booking</h2>
+                        </div>
+                    </div>
+
+                    <div class="experience-cards" id="experienceCards">
+                        <button type="button" class="experience-tile" data-addon="Sunrise breakfast" data-room="Ocean Deluxe" data-note="Reserve a sunrise breakfast table by the water.">
+                            <span>Morning ritual</span>
+                            <strong>Sunrise breakfast</strong>
+                            <p>Soft launch into the day with ocean-facing dining.</p>
+                        </button>
+                        <button type="button" class="experience-tile" data-addon="Airport pickup" data-room="Skyline Suite" data-note="Add chauffeur pickup for a seamless arrival.">
+                            <span>Arrival comfort</span>
+                            <strong>Airport pickup</strong>
+                            <p>Door-to-lobby transfer with premium welcome flow.</p>
+                        </button>
+                        <button type="button" class="experience-tile" data-addon="Spa ritual" data-room="Private Villa" data-note="Plan a recovery spa session during the stay.">
+                            <span>Wellness</span>
+                            <strong>Spa ritual</strong>
+                            <p>Massage and thermal circuit designed around your stay.</p>
+                        </button>
+                        <button type="button" class="experience-tile" data-addon="Chef tasting" data-room="Family Haven" data-note="Schedule the signature chef tasting experience.">
+                            <span>Dining</span>
+                            <strong>Chef tasting</strong>
+                            <p>An evening menu crafted as a memorable event.</p>
+                        </button>
+                    </div>
+                </article>
+            </section>
+
+            <section class="reservation-grid" id="reservation-section">
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">Create reservation</span>
+                            <h2>Design your signature stay</h2>
+                        </div>
+                    </div>
+
+                    <form id="reservationForm" class="form-grid">
+                        <label>
+                            Full name
+                            <input type="text" name="guest_name" placeholder="Asha Sharma" required>
+                        </label>
+                        <label>
+                            Email
+                            <input type="email" name="email" placeholder="asha@example.com" required>
+                        </label>
+                        <label>
+                            Check-in
+                            <input type="date" name="check_in" id="checkInInput" required>
+                        </label>
+                        <label>
+                            Check-out
+                            <input type="date" name="check_out" id="checkOutInput" required>
+                        </label>
+                        <label>
+                            Room preference
+                            <select name="room_type" id="roomTypeInput">
+                                <option>Ocean Deluxe</option>
+                                <option>Skyline Suite</option>
+                                <option>Family Haven</option>
+                                <option>Private Villa</option>
+                            </select>
+                        </label>
+                        <label>
+                            Guests
+                            <input type="number" name="guest_count" id="guestCountInput" min="1" max="8" value="2" required>
+                        </label>
+                        <label>
+                            Arrival time
+                            <select name="arrival_time" id="arrivalTimeInput">
+                                <option value="">Flexible</option>
+                                <option>Morning arrival</option>
+                                <option>Afternoon arrival</option>
+                                <option>Evening arrival</option>
+                                <option>Late night arrival</option>
+                            </select>
+                        </label>
+                        <label>
+                            Occasion
+                            <select name="occasion" id="occasionInput">
+                                <option value="">General escape</option>
+                                <option>Anniversary</option>
+                                <option>Birthday</option>
+                                <option>Family holiday</option>
+                                <option>Workation</option>
+                                <option>Wellness retreat</option>
+                            </select>
+                        </label>
+
+                        <div class="full-span">
+                            <span class="field-title">Enhance the stay</span>
+                            <div class="addon-grid" id="addonGrid">
+                                <label class="addon-pill">
+                                    <input type="checkbox" value="Airport pickup">
+                                    <span>Airport pickup</span>
+                                </label>
+                                <label class="addon-pill">
+                                    <input type="checkbox" value="Sunrise breakfast">
+                                    <span>Sunrise breakfast</span>
+                                </label>
+                                <label class="addon-pill">
+                                    <input type="checkbox" value="Spa ritual">
+                                    <span>Spa ritual</span>
+                                </label>
+                                <label class="addon-pill">
+                                    <input type="checkbox" value="Chef tasting">
+                                    <span>Chef tasting</span>
+                                </label>
+                                <label class="addon-pill">
+                                    <input type="checkbox" value="Romance styling">
+                                    <span>Romance styling</span>
+                                </label>
+                                <label class="addon-pill">
+                                    <input type="checkbox" value="Late checkout">
+                                    <span>Late checkout</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <label class="full-span">
+                            Special request
+                            <textarea name="special_request" id="specialRequestInput" rows="3" placeholder="Celebration, dietary note, early check-in request, room styling idea..."></textarea>
+                        </label>
+
+                        <div class="form-actions full-span">
+                            <button type="submit" class="button button-primary" id="reservationSubmit">Create reservation</button>
+                            <button type="button" class="button button-secondary" id="generateConceptButton">Generate stay concept</button>
+                            <span class="subtle-note">Your receipt and access token will be available immediately after confirmation.</span>
+                        </div>
+                    </form>
+
+                    <div class="result-panel success-state" id="reservationResult">
+                        <div class="result-header">
+                            <span>Booking status</span>
+                            <span class="status-badge confirmed">Preview</span>
+                        </div>
+                        <div id="reservationResultBody">
+                            Confirm a reservation to unlock the downloadable receipt and curated booking summary.
+                        </div>
+                        <div class="result-actions">
+                            <button type="button" class="button button-secondary" id="downloadReceiptButton" disabled>Download receipt</button>
+                            <button type="button" class="button button-secondary" id="copyReservationSummaryButton" disabled>Copy summary</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-kicker">View or cancel</span>
+                            <h2>Manage your reservation</h2>
+                        </div>
+                    </div>
+
+                    <form id="manageForm" class="form-grid compact">
+                        <label>
+                            Reservation ID
+                            <input type="text" name="reservation_id" id="reservationIdInput" placeholder="GAB-XXXXXXXX" required>
+                        </label>
+                        <label>
+                            Access token
+                            <input type="text" name="access_token" id="accessTokenInput" placeholder="Token returned at booking" required>
+                        </label>
+                        <div class="manage-actions full-span">
+                            <button type="submit" class="button button-primary" data-action="view">View reservation</button>
+                            <button type="submit" class="button button-danger" data-action="cancel">Cancel reservation</button>
+                            <button type="button" class="button button-secondary" id="copyAccessToken">Copy token</button>
+                            <button type="button" class="button button-secondary" id="downloadManagedReceiptButton" disabled>Download receipt</button>
+                        </div>
+                    </form>
+
+                    <div class="result-panel info-state" id="manageResult">
+                        <div class="result-header">
+                            <span>Reservation status</span>
+                            <span class="status-badge pending" id="manageStatusBadge">Awaiting lookup</span>
+                        </div>
+                        <div id="manageResultBody">
+                            Enter both your reservation ID and access token to view, cancel, or download your receipt securely.
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script src="/assets/app.js"></script>
+</body>
+</html>
